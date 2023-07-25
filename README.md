@@ -1,6 +1,9 @@
 # minikube-on-linux
 A simple shell that helps you boot up a local kubernetes cluster on linux host.
 
+minikube is ownsome! Take a look:
+	https://minikube.sigs.k8s.io/docs/start/
+
 ## Background
 Booting up a local kubernetes cluster will take a few steps if you fellow the official documents. And it extremely depends on the network. It will be a little difficult if you want to try kubernetes in a private network. This script can help you make a offline installation package and boot up a local kubernetes cluster easily.
 
