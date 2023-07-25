@@ -6,7 +6,6 @@
 #              offline minikube installation package.
 #
 
-
 set -e
 
 
@@ -376,6 +375,9 @@ function start() {
     [[ ! -z "${cgroup_driver}" ]] || cgroup_driver=systemd
     # kubelet will use cgroupfs as defualt cgroup driver
     minikube start --vm-driver none --kubernetes-version "${KUBE_VERSION}" --extra-config kubelet.cgroup-driver="${cgroup_driver}" --image-mirror-country='cn'
+    # Other options:
+    # --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
+    # --container-runtime='containerd'
 }
 
 function package() {
