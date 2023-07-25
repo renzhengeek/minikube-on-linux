@@ -374,10 +374,12 @@ function start() {
     local cgroup_driver=$(docker info 2>/dev/null | grep 'Cgroup Driver' | awk -F ':' '{ print $2 }' | tr -d '[:blank:]')
     [[ ! -z "${cgroup_driver}" ]] || cgroup_driver=systemd
     # kubelet will use cgroupfs as defualt cgroup driver
-    minikube start --vm-driver none --kubernetes-version "${KUBE_VERSION}" --extra-config kubelet.cgroup-driver="${cgroup_driver}" --image-mirror-country='cn'
-    # Other options:
-    # --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
-    # --container-runtime='containerd'
+    minikube start --vm-driver none \
+	--kubernetes-version "${KUBE_VERSION}" \
+	--extra-config kubelet.cgroup-driver="${cgroup_driver}" \
+	--image-mirror-country='cn' \
+	--image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers \
+	--container-runtime='containerd'
 }
 
 function package() {
@@ -396,7 +398,7 @@ function usage() {
 
 make_dirs
 
-check_requirement
+#check_requirement
 
 case "$1" in 
     start)
@@ -404,7 +406,7 @@ case "$1" in
         download_binaries
         set_envs
         install
-        pull_and_save_images
+        #pull_and_save_images
         start
         ;;
     package)
