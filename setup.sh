@@ -61,13 +61,26 @@ function logger_warn() {
     echo "${time} - WARN - $@" >> ${BASE_DIR}/logs/setup.log
 }
 
-# check docker is started or not
 function check_requirement() {
-    if [[ ! $(docker info 2>/dev/null) ]] 
-    then 
-        logger_error "docker is not running, please start it first."
-        exit 1
+    # check containerd is ready
+    CRI_CLI=`which crictl`
+    if [[ $? -ne 0 ]]
+    then
+    	logger_error "Please make sure crictl is installed."
+    	exit 1
     fi
+    runtime=$($CRI_CLI version | grep RuntimeName | awk '{print $2}')
+    if [[ X"$runtime" != X"containerd" ]]
+    then
+    	logger_error "Please make sure containerd is ready."
+    	exit 1
+    fi
+    # check docker is started or not
+    #if [[ ! $(docker info 2>/dev/null) ]] 
+    #then 
+    #    logger_error "docker is not running, please start it first."
+    #    exit 1
+    #fi
 }
 
 function make_dirs() {
@@ -398,7 +411,7 @@ function usage() {
 
 make_dirs
 
-#check_requirement
+check_requirement
 
 case "$1" in 
     start)
