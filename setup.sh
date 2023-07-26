@@ -281,13 +281,13 @@ function pull_and_save_images() {
     docker tag "${K8S_REGISTRY}/kube-controller-manager-amd64:${KUBE_VERSION}" "${K8S_REGISTRY}/kube-controller-manager:${KUBE_VERSION}"
     pull_and_save_image "${REGISTRY_MIRROR}/kube-apiserver-amd64:${KUBE_VERSION}" "${K8S_REGISTRY}/kube-apiserver-amd64:${KUBE_VERSION}"
     docker tag "${K8S_REGISTRY}/kube-apiserver-amd64:${KUBE_VERSION}" "${K8S_REGISTRY}/kube-apiserver:${KUBE_VERSION}"
-	if [[ "${KUBE_VERSION}" > "v1.27.3" ]] || [[ "${KUBE_VERSION}" = "v1.27.3" ]]
+    if [[ "${KUBE_VERSION}" > "v1.27.3" ]] || [[ "${KUBE_VERSION}" = "v1.27.3" ]]
 	then
-        pull_and_save_image "${REGISTRY_MIRROR}/pause-amd64:3.9" "${K8S_REGISTRY}/pause-amd64:3.9"
         pull_and_save_image "${REGISTRY_MIRROR}/pause:3.9" "${K8S_REGISTRY}/pause:3.9"
+        docker tag "${REGISTRY_MIRROR}/pause:3.9" "${K8S_REGISTRY}/pause-amd64:3.9"
 
-        pull_and_save_image "${REGISTRY_MIRROR}/etcd-amd64:3.5.7-0" "${K8S_REGISTRY}/etcd-amd64:3.5.7-0"
-        docker tag "${K8S_REGISTRY}/etcd-amd64:3.5.7-0" "${K8S_REGISTRY}/etcd:3.5.7-0"
+        pull_and_save_image "${REGISTRY_MIRROR}/etcd:3.5.7-0" "${K8S_REGISTRY}/etcd:3.5.7-0"
+        docker tag "${K8S_REGISTRY}/etcd:3.5.7-0" "${K8S_REGISTRY}/etcd-amd64:3.5.7-0"
 
         pull_and_save_image "${REGISTRY_MIRROR}/coredns:v1.10.1" "${K8S_REGISTRY}/coredns/coredns:v1.10.1"
         docker tag "${K8S_REGISTRY}/coredns/coredns:v1.10.1" "${K8S_REGISTRY}/coredns/coredns-amd64:v1.10.1"
